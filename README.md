@@ -3,8 +3,10 @@ projections of STL meshes for use in analysis, particularly when doing
 comparisons of frontal area of automotive shapes for CFD purposes. 
 
 External Dependencies: 
--VTK 
--Numpy
+
+- VTK 
+- Numpy
+
 
 There is a formal python package named Parea 
 (https://github.com/nathanrooy/p-area) that takes an analytical approach to this 
