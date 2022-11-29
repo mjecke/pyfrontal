@@ -2,7 +2,11 @@ This is a self-contained python script that can be used to compute frontal area
 projections of STL meshes for use in analysis, particularly when doing 
 comparisons of frontal area of automotive shapes for CFD purposes. 
 
-There is a formal python package named parea 
+External Dependencies: 
+-VTK 
+-Numpy
+
+There is a formal python package named Parea 
 (https://github.com/nathanrooy/p-area) that takes an analytical approach to this 
 problem by calculating the area of all of the triangles of a mesh in the chosen 
 axis, however this program was very, very slow for me when attempting 
