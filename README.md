@@ -32,7 +32,7 @@ large scans, 1GB+ files in about 30 seconds on an M1 Macbook.
 Binary STLs load fine and the VTK render doesn't care about unified
 normals, non-manifolds, etc.  It tends to just work.
 
-The accuracy for typical sedan sized test shapes seems to be roughly ~0.0015 m^2
+The accuracy for typical sedan sized test vehicles seems to be roughly ~0.0015 m^2
 or better depending on the resolution used used and the fit factor of vehicle to
 render frame.  
 
