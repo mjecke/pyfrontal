@@ -1,0 +1,15 @@
+Test STL file is a triangulation of shapes that added together have different projected 
+view areas for each X, Y, and Z., with an analytically exact solution per below.
+
+The X and Y directions are exact values due to their triangular nature. 
+For the Z value, there are circles involved, and the tessellation of the 
+file is fine enough that the area should be measured to nearly exactly this value. 
+
+in X direction: 2.000000 m^2
+in y direction: 6.000000 m^2
+in Z direction: 5.570796 m^2
+
+These values can test the program for correct scaling and rendering.
+
+If the fit and resolution is set correctly there should be less than 0.001m^2 error
+between program output and these values. 
