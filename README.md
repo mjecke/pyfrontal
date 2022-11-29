@@ -48,6 +48,10 @@ sized STL models in millimeters.  The program has some safety checks to
 determine if the renderer is configured to work with an appropriate model size,
 and if not, it exits with error info. 
 
+To test, run:
+python pyfrontal.py -x tests/test_mesh.stl
+should result ina Projected Area: 2.0 m^2
+
 An example use case: 
 ![example](img/example.png)
 
