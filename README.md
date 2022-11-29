@@ -43,3 +43,7 @@ determine if the renderer is configured to work with an appropriate model size,
 and if not, it exits with error info. 
 
 An example use case: 
+![example](img/example.png)
+
+The result preview window:
+![preview](img/lotus_elise2_output.png)
