@@ -13,3 +13,5 @@ These values can test the program for correct scaling and rendering.
 
 If the fit and resolution is set correctly there should be less than 0.001m^2 error
 between program output and these values. 
+X and Y should actually compute as exactly 2.0 and 6.0, at least this is the case on
+my test machine and version of VTK. 
