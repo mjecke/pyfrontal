@@ -1,3 +1,4 @@
+##pyfrontal.py
 [![GitHub license](https://img.shields.io/github/license/mjecke/pyfrontal?style=flat-square)](https://github.com/mjecke/pyfrontal/blob/main/LICENSE)
 
 This is a self-contained python script that can be used to compute frontal area
