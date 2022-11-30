@@ -1,3 +1,5 @@
+[![GitHub license](https://img.shields.io/github/license/mjecke/pyfrontal?style=flat-square)](https://github.com/mjecke/pyfrontal/blob/main/LICENSE)
+
 This is a self-contained python script that can be used to compute frontal area
 projections of STL meshes for use in analysis, particularly when doing 
 comparisons of frontal area of automotive shapes for CFD purposes. 
