@@ -54,7 +54,7 @@ if (args.x + args.y + args.z) > 1: #ensure only one axis is used
 if args.debug:
     printd = print #it just turns printd functions to print statements
 else:
-    def printd(x):
+    def printd(x, *ex):
         pass #else ignore them
 
 projaxis = "X" #default axis to X
