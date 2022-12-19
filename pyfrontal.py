@@ -76,7 +76,7 @@ printd("\n")
 printd("DEBUG ON")
 printd("----------------------------------------------------------------------")
 
-printd("FITFACTOR = " +str(fitfactor))
+printd("FITFACTOR = ", fitfactor)
 # ------------------ VTK Render Setup ------------------------------------------
 max_frame = args.res #sets max resolution, render windows size
 
@@ -128,17 +128,17 @@ x_bounds = bounds[0:2]
 y_bounds = bounds[2:4]
 z_bounds = bounds[4:6]
 
-printd("Bounds in x = " +str(x_bounds))
-printd("Bounds in y = " +str(y_bounds))
-printd("Bounds in z = " +str(z_bounds))
+printd("Bounds in x = ", x_bounds)
+printd("Bounds in y = ", y_bounds)
+printd("Bounds in z = ", z_bounds)
 
 intXdim = int(abs(x_bounds[0])+abs(x_bounds[1]))
 intYdim = int(abs(y_bounds[0])+abs(y_bounds[1]))
 intZdim = int(abs(z_bounds[0])+abs(z_bounds[1]))
 
-printd("model X Dimension = " +str(intXdim))
-printd("model Y Dimension = " +str(intYdim))
-printd("model Z Dimension = " +str(intZdim))
+printd("model X Dimension = ", intXdim)
+printd("model Y Dimension = ", intYdim)
+printd("model Z Dimension = ", intZdim)
 
 # Check for model dimensions that aren't going to work.  
 if (intXdim or intYdim or intZdim) < 100:
@@ -169,18 +169,18 @@ maxscale = max([frame_width, frame_height])
 
 aspect = frame_width/frame_height
 
-printd("ASPECT RATIO = " + str(aspect))
-printd("FRAME WIDTH " + str(frame_width))
-printd("FRAME HEIGHT " + str(frame_height))
+printd("ASPECT RATIO = ", aspect)
+printd("FRAME WIDTH = ", frame_width)
+printd("FRAME HEIGHT = ", frame_height)
 
 # Find center
 x_center = (int(np.average(x_bounds)))
 y_center = (int(np.average(y_bounds)))
 z_center = (int(np.average(z_bounds)))
 
-printd("X CENTER = " + str(x_center))
-printd("Y CENTER = " + str(y_center))
-printd("Z CENTER = " + str(z_center))
+printd("X CENTER = ", x_center)
+printd("Y CENTER = ", y_center)
+printd("Z CENTER = ", z_center)
 
 # Initialize the mapper
 surfaceMapper = vtk.vtkPolyDataMapper()
@@ -241,7 +241,7 @@ img = (np.dot(img[...,:3], [1/3, 1/3, 1/3])).astype(int) #rgb to mono
 
 imgEdges = np.sum(img[0,:])+np.sum(img[-1,:])+np.sum(img[:,0])+np.sum(img[:,-1])
 
-if imgEdges > 0:
+if imgEdges > 0: #white pixels on border means model got cropped!
     print("\n")
     print("Model is not fit to render window, results cannot be computed")
     print("accurately.  Change argument -fitfactor to a greater value.")
@@ -259,13 +259,13 @@ print("\n")
 print("FRONTAL AREA PROJECTION")
 print("-----------------------------------------------------------------------")
 print("Assumes STL in millimeters, area will be calculated in square meters.")
-print("Total number of triangles in STL: " + "\t" + str(triangles_count))
+print("Total number of triangles in STL: \t", triangles_count)
 print("\n")
-print("Projected Direction is in: " + "\t\t" + projaxis + " axis")
+print("Projected Direction is in: \t\t", projaxis, " axis")
 print("\n")
-print("Projected Area: " + "\t\t\t" + str(proj_area) + " m^2")
+print("Projected Area: \t\t\t", proj_area, " m^2")
 print("\n")
-print("Time to Compute: " + "\t\t\t" + str(time.process_time()) + " seconds")
+print("Time to Compute: \t\t\t", time.process_time(), " seconds")
 print("-----------------------------------------------------------------------")
 
 # ------------------ Show Window -----------------------------------------------
