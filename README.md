@@ -57,7 +57,9 @@ python pyfrontal.py -x tests/test_mesh.stl
 This should result in a Projected Area: 2.0 m^2 
 
 An example use case: 
+
 ![example](img/example1.png)
 
 The resulting preview window:
+
 ![preview](img/lotus_elise2_output.png)
