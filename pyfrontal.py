@@ -1,19 +1,19 @@
-################################################################################
+###############################################################################
 # The following is a python script that uses VTK to generate fast
 # projections of STL meshes for frontal area calculations.  See README for more
 # information.
-# (c) 2022 M. Eckert 
-################################################################################
+# (c) 2022 M. Eckert
+###############################################################################
 import os
 import time
+import argparse
 
 import vtk
 from vtk.util.numpy_support import vtk_to_numpy
 import numpy as np
 
-import argparse
 
-# ------------------ Argument Parsing ------------------------------------------
+# ------------------ Argument Parsing -----------------------------------------
 def valid_file(param):
     base, ext = os.path.splitext(param)
     if ext.lower() not in ('.stl'):
@@ -46,18 +46,18 @@ parser.add_argument("-debug", help="Turns on debug messages",
 
 args = parser.parse_args()
 
-if (args.x + args.y + args.z) > 1: #ensure only one axis is used
+if (args.x + args.y + args.z) > 1:  # ensure only one axis is used
     print("\nERROR: Choose only one projection axis argument.\n")
     quit()
 
-# debug print function enable/disable 
+# debug print function enable/disable
 if args.debug:
-    printd = print #it just turns printd functions to print statements
+    printd = print  # it just turns printd functions to print statements
 else:
     def printd(x, *ex):
-        pass #else ignore them
+        pass  # else ignore them
 
-projaxis = "X" #default axis to X
+projaxis = "X"  # default axis to X
 if args.x:
     projaxis = "X"
 if args.y:
@@ -68,17 +68,17 @@ if args.z:
 # Ground height in mm from Z=0
 ground = (args.ground)
 
-#fit factor is a scaling to help fit to scale inside view window. usually needs
-#to be within 1.0 to 2.0 for cars <-> trucks
+# fit factor is a scaling to help fit to scale inside view window.
+# usually needs to be within 1.0 to 2.0 for cars <-> trucks
 fitfactor = (args.fitfactor)
 
 printd("\n")
 printd("DEBUG ON")
-printd("----------------------------------------------------------------------")
+printd("---------------------------------------------------------------------")
 
 printd("FITFACTOR = ", fitfactor)
-# ------------------ VTK Render Setup ------------------------------------------
-max_frame = args.res #sets max resolution, render windows size
+# ------------------ VTK Render Setup -----------------------------------------
+max_frame = args.res  # sets max resolution, render windows size
 
 # Create the renderer
 ren = vtk.vtkRenderer()
@@ -89,7 +89,7 @@ renWin = vtk.vtkRenderWindow()
 # Add the renderer to the window
 renWin.AddRenderer(ren)
 
-# Define an interactor. 
+# Define an interactor.
 iren = vtk.vtkRenderWindowInteractor()
 
 # Set the window defined above as the window that the interactor
@@ -140,7 +140,7 @@ printd("model X Dimension = ", intXdim)
 printd("model Y Dimension = ", intYdim)
 printd("model Z Dimension = ", intZdim)
 
-# Check for model dimensions that aren't going to work.  
+# Check for model dimensions that aren't going to work.
 if (intXdim or intYdim or intZdim) < 100:
     print("Model dimensions small, methods likely innacurate.")
     print("Program meant for vehicle models in mm units.")
@@ -159,11 +159,11 @@ if projaxis == "X":
 if projaxis == "Y":
     frame_width = (intXdim)
     frame_height = (intZdim)
-    
+
 if projaxis == "Z":
     frame_width = (intXdim)
     frame_height = (intYdim)
-    
+
 minscale = min([frame_width, frame_height])
 maxscale = max([frame_width, frame_height])
 
@@ -201,9 +201,9 @@ iren.Initialize()
 camera = ren.GetActiveCamera()
 camera.ParallelProjectionOn()
 
-camera.SetParallelScale(max_frame*fitfactor) #fitfactor used here
+camera.SetParallelScale(max_frame*fitfactor)  # fitfactor used here
 
-camera.SetClippingRange(-100000, 100000) #really large so no clipping
+camera.SetClippingRange(-100000, 100000)  # really large so no clipping
 
 # Set up view on center of data
 if projaxis == "X":
@@ -226,10 +226,10 @@ grabber.SetInput(renWin)
 renWin.SetSize(int(max_frame*aspect), max_frame)
 grabber.Update()
 
-if args.nosave is False: # Save the resulting render to a file for safekeeping
+if args.nosave is False:  # Save the resulting render to a file for safekeeping
     writer = vtk.vtkPNGWriter()
     writer.SetInputData(grabber.GetOutput())
-    writer.SetFileName(os.path.splitext(args.filename)[0]  + "_output.png")
+    writer.SetFileName(os.path.splitext(args.filename)[0] + "_output.png")
     writer.Write()
 
 img = grabber.GetOutput()
@@ -237,27 +237,30 @@ rows, cols, _ = img.GetDimensions()
 img = vtk_to_numpy(img.GetPointData().GetScalars())
 img = img.reshape(cols, rows, -1)
 
-img = (np.dot(img[...,:3], [1/3, 1/3, 1/3])).astype(int) #rgb to mono
+img = (np.dot(img[..., :3], [1/3, 1/3, 1/3])).astype(int)  # rgb to mono
 
-imgEdges = np.sum(img[0,:])+np.sum(img[-1,:])+np.sum(img[:,0])+np.sum(img[:,-1])
+borders = [img[0, :], img[-1, :], img[:, 0], img[:, -1]]
+borderCount = 0
+for elem in borders:
+    borderCount += np.sum(elem)
 
-if imgEdges > 0: #white pixels on border means model got cropped!
+if borderCount > 0:  # white pixels on border means model got cropped!
     print("\n")
     print("Model is not fit to render window, results cannot be computed")
     print("accurately.  Change argument -fitfactor to a greater value.")
     print("Program exiting...")
     quit()
 
-# ------------------ Area Calculation ------------------------------------------
+# ------------------ Area Calculation -----------------------------------------
 # Take the output and do the area calculation
-n_white_pixels = np.sum(img == 255) #sum the white pixels in the render
+n_white_pixels = np.sum(img == 255)  # sum the white pixels in the render
 
-proj_area = (n_white_pixels*(fitfactor**2)) / (250000) #scaling math for px/m^2
+proj_area = (n_white_pixels*(fitfactor**2)) / (250000)  # math for px/m^2
 
 # Print the details to the command line
 print("\n")
 print("FRONTAL AREA PROJECTION")
-print("-----------------------------------------------------------------------")
+print("----------------------------------------------------------------------")
 print("Assumes STL in millimeters, area will be calculated in square meters.")
 print("Total number of triangles in STL: \t", triangles_count)
 print("\n")
@@ -266,14 +269,14 @@ print("\n")
 print("Projected Area: \t\t\t", proj_area, " m^2")
 print("\n")
 print("Time to Compute: \t\t\t", time.process_time(), " seconds")
-print("-----------------------------------------------------------------------")
+print("----------------------------------------------------------------------")
 
-# ------------------ Show Window -----------------------------------------------
+# ------------------ Show Window ----------------------------------------------
 if args.noshow is False:
     print("FINISHED")
     print("Close VTK window to exit...")
     print("\n")
-    iren.Start() # Start the event loop to show the render
+    iren.Start()  # Start the event loop to show the render
 
 else:
     print("FINISHED")
