@@ -41,7 +41,7 @@ render frame.
 
 The program has several command line options (see -h for help) to help get best
 results.  It generates a PNG of the computed shadowmask by default and shows it
-in a preview, but this can be disabled via command line arguments. Default is 
+in a preview, but this can be disabled via -nosave and -noshow. Default is 
 projection in the X direction as is the case for most frontal areas of 
 automotive models and default windowing and resolution is roughly correct for 
 most vehicles. 
@@ -53,10 +53,11 @@ and if not, it exits with error info.
 
 To test, run:
 python pyfrontal.py -x tests/test_mesh.stl
-should result ina Projected Area: 2.0 m^2
+
+This should result in a Projected Area: 2.0 m^2 
 
 An example use case: 
-![example](img/example.png)
+![example](img/example1.png)
 
-The result preview window:
+The resulting preview window:
 ![preview](img/lotus_elise2_output.png)
