@@ -2,7 +2,6 @@
 # The following is a python script that uses VTK to generate fast
 # projections of STL meshes for frontal area calculations.  See README for more
 # information.
-# (c) 2022 M. Eckert
 ###############################################################################
 import os
 import time
@@ -72,8 +71,7 @@ ground = (args.ground)
 # usually needs to be within 1.0 to 2.0 for cars <-> trucks
 fitfactor = (args.fitfactor)
 
-printd("\n")
-printd("DEBUG ON")
+printd("\nDEBUG ON")
 printd("---------------------------------------------------------------------")
 
 printd("FITFACTOR = ", fitfactor)
@@ -245,8 +243,7 @@ for elem in borders:
     borderCount += np.sum(elem)
 
 if borderCount > 0:  # white pixels on border means model got cropped!
-    print("\n")
-    print("Model is not fit to render window, results cannot be computed")
+    print("\nModel is not fit to render window, results cannot be computed")
     print("accurately.  Change argument -fitfactor to a greater value.")
     print("Program exiting...")
     quit()
@@ -258,16 +255,13 @@ n_white_pixels = np.sum(img == 255)  # sum the white pixels in the render
 proj_area = (n_white_pixels*(fitfactor**2)) / (250000)  # math for px/m^2
 
 # Print the details to the command line
-print("\n")
-print("FRONTAL AREA PROJECTION")
+
+print("\nFRONTAL AREA PROJECTION")
 print("----------------------------------------------------------------------")
 print("Assumes STL in millimeters, area will be calculated in square meters.")
-print("Total number of triangles in STL: \t", triangles_count)
-print("\n")
-print("Projected Direction is in: \t\t", projaxis, " axis")
-print("\n")
-print("Projected Area: \t\t\t", proj_area, " m^2")
-print("\n")
+print("Total number of triangles in STL: \t", triangles_count, "\n")
+print("Projected Direction is in: \t\t", projaxis, " axis\n")
+print("Projected Area: \t\t\t", proj_area, " m^2\n")
 print("Time to Compute: \t\t\t", time.process_time(), " seconds")
 print("----------------------------------------------------------------------")
 
@@ -275,10 +269,8 @@ print("----------------------------------------------------------------------")
 if args.noshow is False:
     print("FINISHED")
     print("Close VTK window to exit...")
-    print("\n")
     iren.Start()  # Start the event loop to show the render
 
 else:
     print("FINISHED")
-    print("\n")
     quit()
