@@ -21,7 +21,7 @@ straight from 3D scanning, say, of wind tunnel models.
 up a machine. 
 The method I am using leverages the VTK rendering pipeline to take a numerical 
 approach to the area calculation problem, using ray-tracing on a fixed raster 
-resolution window to compute an approximation of the projected ortogonal area.
+resolution window to compute an approximation of the projected orthogonal area.
 
 This method is ~30x-60x faster than the analytical approach and is inspired by
 the  method that is used to measure frontal area of physical vehicles for 
@@ -36,7 +36,7 @@ Binary STLs load fine and the VTK render doesn't care about unified
 normals, non-manifolds, etc.  It tends to just work.
 
 The accuracy for typical sedan sized test vehicles seems to be roughly ~0.0015 m^2
-or better depending on the resolution used used and the fit factor of vehicle to
+or better depending on the resolution used and the fit factor of vehicle to
 render frame.  
 
 The program has several command line options (see -h for help) to help get best
@@ -46,7 +46,7 @@ projection in the X direction as is the case for most frontal areas of
 automotive models and default windowing and resolution is roughly correct for 
 most vehicles. 
 
-The scale and resolution is adaptable but is mostly setup to work with car-
+The scale and resolution are adaptable, but the defaults are mostly setup to work with car-
 sized STL models in millimeters.  The program has some safety checks to 
 determine if the renderer is configured to work with an appropriate model size,
 and if not, it exits with error info. 
