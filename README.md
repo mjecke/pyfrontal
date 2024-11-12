@@ -1,5 +1,7 @@
 ## pyfrontal.py
-[![GitHub license](https://img.shields.io/github/license/mjecke/pyfrontal?style=flat)](https://github.com/mjecke/pyfrontal/blob/main/LICENSE)
+
+** NOTE: Display Scaling is affecting the output of this program if you have scaling set other than 100%. 
+** Reccomended not to use this script unless output can be verified for now. 
 
 This is a self-contained python script that can be used to compute frontal area
 projections of STL meshes for use in analysis, particularly when doing 
@@ -10,15 +12,7 @@ External Dependencies:
 - VTK 
 - Numpy
 
-
-There is a formal python package named Parea 
-(https://github.com/nathanrooy/p-area) that takes an analytical approach to this 
-problem by calculating the area of all of the triangles of a mesh in the chosen 
-axis, however this program was very, very slow for me when attempting 
-computations on very large STL files which is common when dealing with meshes 
-straight from 3D scanning, say, of wind tunnel models. 
-'parea' could not handle computing meshes that were GB's in size without locking 
-up a machine. 
+ 
 The method I am using leverages the VTK rendering pipeline to take a numerical 
 approach to the area calculation problem, using ray-tracing on a fixed raster 
 resolution window to compute an approximation of the projected orthogonal area.
@@ -52,6 +46,7 @@ determine if the renderer is configured to work with an appropriate model size,
 and if not, it exits with error info. 
 
 To test, run:
+
 python pyfrontal.py -x tests/test_mesh.stl
 
 This should result in a Projected Area: 2.0 m^2 
